@@ -41,7 +41,50 @@ filetype plugin indent on    " required
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
 
+syntax enable
+
+" Color preferences
 set background=dark
 colorscheme ron
+
+" Numbers column on the left side
 set laststatus=2
 set number
+
+" Highlight lines > 80 characters
+autocmd FileType * highlight WhiteSpace ctermbg=darkred ctermfg=white guibg=#FFD9D9
+autocmd FileType * match WhiteSpace /\%81v.\+\|\s\+$/
+
+" Auto-return
+set tw=80
+
+" Positions comments at same indent as code
+filetype plugin indent on
+
+" Perl specific
+" autoindent
+autocmd FileType perl set autoindent|set smartindent
+
+" " 4 space tabs
+autocmd FileType perl set tabstop=4|set shiftwidth=4|set expandtab|set softtabstop=4
+
+" show matching brackets
+autocmd FileType perl set showmatch
+
+" show line numbers
+autocmd FileType perl set number
+
+" check perl code with :make
+autocmd FileType perl set makeprg=perl\ -c\ %\ $*
+autocmd FileType perl set errorformat=%f:%l:%m
+autocmd FileType perl set autowrite
+
+" comment/uncomment blocks of code (in vmode)
+vmap _c :s/^/#/gi<Enter>
+vmap _C :s/^#//gi<Enter>
+
+" my perl includes pod
+let perl_include_pod = 1
+
+" syntax color complex things like @{${"foo"}}
+let perl_extended_vars = 1
